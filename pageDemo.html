@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tests de Contraste avec Scénarios Limites</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .test-case {
+            margin: 20px 0;
+            padding: 10px;
+            border: 2px solid black;
+        }
+        .error {
+            border-color: red;
+            background-color: #fdd;
+        }
+        .warning {
+            border-color: orange;
+            background-color: #ffd;
+        }
+        .ok {
+            border-color: green;
+            background-color: #dfd;
+        }
+        .test-case p, .test-case a, .test-case th, .test-case td {
+            margin: 0;
+            padding: 5px;
+        }
+        .test-case a {
+            text-decoration: none;
+        }
+        .test-case .text-shadow {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .test-case .background-image {
+            background-image: url('https://via.placeholder.com/150');
+            background-size: cover;
+            height: 100px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .test-case .semi-transparent {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .contrast-result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .contrast-result.pass {
+            color: green;
+        }
+        .contrast-result.fail {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tests de Contraste avec Scénarios Limites</h1>
+
+    <!-- Bouton pour lancer l'analyse -->
+    <button id="analyze-button">Analyser le Contraste</button>
+
+    <!-- Contraste Insuffisant entre Texte et Arrière-plan -->
+    <div class="test-case error">
+        <p style="color: #ddd; background-color: #fff;">Texte en gris clair sur fond blanc (Contraste insuffisant)</p>
+    </div>
+
+    <!-- Contraste Suffisant entre Texte et Arrière-plan -->
+    <div class="test-case ok">
+        <p style="color: #000; background-color: #fff;">Texte noir sur fond blanc (Contraste suffisant)</p>
+    </div>
+
+    <!-- Contraste Insuffisant entre Liens et Arrière-plan -->
+    <div class="test-case warning">
+        <a href="#" style="color: #aaa; background-color: #ddd;">Lien en gris clair sur fond gris clair (Contraste insuffisant)</a>
+    </div>
+
+    <!-- Contraste Suffisant entre Liens et Arrière-plan -->
+    <div class="test-case ok">
+        <a href="#" style="color: #00f; background-color: #fff;">Lien bleu sur fond blanc (Contraste suffisant)</a>
+    </div>
+
+    <!-- Contraste Insuffisant entre Textes en Hover et Texte Normal -->
+    <div class="test-case warning">
+        <a href="#" style="color: #333; background-color: #ccc;" onmouseover="this.style.color='#666';">Lien en gris foncé sur fond gris clair (Contraste insuffisant au survol)</a>
+    </div>
+
+    <!-- Contraste Suffisant entre Textes en Hover et Texte Normal -->
+    <div class="test-case ok">
+        <a href="#" style="color: #000; background-color: #fff;" onmouseover="this.style.color='#f00';">Lien noir sur fond blanc (Contraste suffisant au survol)</a>
+    </div>
+
+    <!-- Contraste Insuffisant pour les Éléments Importants -->
+    <div class="test-case error">
+        <button style="background-color: #ff0; color: #ff0;">Bouton jaune pâle sur fond jaune (Contraste insuffisant)</button>
+    </div>
+
+    <!-- Contraste Suffisant pour les Éléments Importants -->
+    <div class="test-case ok">
+        <button style="background-color: #0f0; color: #000;">Bouton vert sur fond noir (Contraste suffisant)</button>
+    </div>
+
+    <!-- Contraste Insuffisant dans les Graphiques ou Icônes -->
+    <div class="test-case warning background-image">
+        <span>Icône en gris clair sur fond gris moyen (Contraste insuffisant)</span>
+    </div>
+
+    <!-- Contraste Suffisant dans les Graphiques ou Icônes -->
+    <div class="test-case ok background-image" style="background-color: #000;">
+        <span style="color: #fff;">Icône en blanc sur fond noir (Contraste suffisant)</span>
+    </div>
+
+    <!-- Contraste Insuffisant pour les Erreurs ou Avertissements -->
+    <div class="test-case error">
+        <p style="color: #d00; background-color: #d0d0d0;">Message d'erreur en rouge foncé sur fond rouge clair (Contraste insuffisant)</p>
+    </div>
+
+    <!-- Contraste Suffisant pour les Erreurs ou Avertissements -->
+    <div class="test-case ok">
+        <p style="color: #d00; background-color: #fff;">Message d'erreur en rouge sur fond blanc (Contraste suffisant)</p>
+    </div>
+
+    <!-- Contraste Insuffisant dans les Tableaux ou Listes -->
+    <div class="test-case warning">
+        <table>
+            <thead>
+                <tr><th style="background-color: #ddd;">En-tête</th></tr>
+            </thead>
+            <tbody>
+                <tr><td style="background-color: #ccc;">Cellule en gris clair sur fond gris moyen (Contraste insuffisant)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Contraste Suffisant dans les Tableaux ou Listes -->
+    <div class="test-case ok">
+        <table>
+            <thead>
+                <tr><th style="background-color: #000; color: #fff;">En-tête</th></tr>
+            </thead>
+            <tbody>
+                <tr><td style="background-color: #fff; color: #000;">Cellule en blanc sur fond noir (Contraste suffisant)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Contraste Insuffisant pour les Labels et Champs de Formulaire -->
+    <div class="test-case warning">
+        <label for="input1" style="color: #aaa;">Label en gris clair</label>
+        <input id="input1" type="text" style="background-color: #ddd;">
+    </div>
+
+    <!-- Contraste Suffisant pour les Labels et Champs de Formulaire -->
+    <div class="test-case ok">
+        <label for="input2" style="color: #000;">Label noir</label>
+        <input id="input2" type="text" style="background-color: #fff;">
+    </div>
+
+    <!-- Contraste Insuffisant dans les Modales ou Pop-ups -->
+    <div class="test-case warning semi-transparent">
+        <p style="color: #999;">Texte dans une fenêtre modale avec fond semi-transparent (Contraste insuffisant)</p>
+    </div>
+
+    <!-- Contraste Suffisant dans les Modales ou Pop-ups -->
+    <div class="test-case ok" style="background-color: rgba(0, 0, 0, 0.9);">
+        <p style="color: #fff;">Texte dans une fenêtre modale avec fond opaque (Contraste suffisant)</p>
+    </div>
+
+    <!-- Contraste Insuffisant entre Éléments Actifs et Inactifs -->
+    <div class="test-case warning">
+        <button style="background-color: #888; color: #aaa;" disabled>Bouton désactivé (Contraste insuffisant)</button>
+    </div>
+
+    <!-- Contraste Suffisant entre Éléments Actifs et Inactifs -->
+    <div class="test-case ok">
+        <button style="background-color: #00f; color: #fff;">Bouton activé (Contraste suffisant)</button>
+    </div>
+
+    <!-- Scénarios Limites -->
+
+    <!-- Couleur Semi-Transparente -->
+    <div class="test-case warning semi-transparent">
+        <p style="color: rgba(0, 0, 0, 0.5);">Texte semi-transparent sur fond semi-transparent</p>
+    </div>
+
+    <!-- Couleur en HSL -->
+    <div class="test-case warning">
+        <p style="color: hsl(0, 100%, 50%); background-color: hsl(0, 100%, 75%);">Texte en HSL sur fond en HSL</p>
+    </div>
+
+    <!-- Couleur Dynamique -->
+    <div class="test-case warning">
+        <button style="background-color: #ff0;" onmouseover="this.style.color='#ff0';">Bouton avec couleur dynamique</button>
+    </div>
+
+    <!-- Arrière-plan avec Image -->
+    <div class="test-case warning background-image">
+        <p style="color: #000;">Texte sur fond d'image</p>
+    </div>
+
+    <!-- Couleur Non Supportée -->
+    <div class="test-case warning">
+        <p style="color: violet; background-color: pink;">Texte en violet sur fond rose (Couleur non supportée)</p>
+    </div>
+
+    <!-- Éléments avec Styles Dynamiques -->
+    <div class="test-case warning">
+        <p id="dynamic-style" style="color: #000;">Texte avec style dynamique</p>
+    </div>
+
+     <!-- Include the JS file -->
+     <script src="candi_analyze_with_results.js"></script>
+     <script>
+         // Attach the click event to the button
+         document.getElementById("analyze-button").addEventListener("click", function () {
+            contrastCouleur.launchAnalysis(); // Call the analysis function from the script
+         });
+     </script>
+</body>
+</html>
